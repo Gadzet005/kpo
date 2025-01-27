@@ -3,6 +3,7 @@ package sem2;
 import lombok.Getter;
 import lombok.ToString;
 
+/** Двигатель с педальным приводом */
 @ToString
 @Getter
 public class PedalEngine implements IEngine {

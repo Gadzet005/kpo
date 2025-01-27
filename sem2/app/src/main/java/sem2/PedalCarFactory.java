@@ -1,5 +1,6 @@
 package sem2;
 
+/** Фабрика для создания автомобилей с педальным приводом */
 public class PedalCarFactory implements ICarFactory<PedalEngineParams> {
   @Override
   public Car createCar(PedalEngineParams carParams, int carNumber) {

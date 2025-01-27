@@ -2,6 +2,7 @@ package sem2;
 
 import lombok.ToString;
 
+/** Двигатель с ручным приводом */
 @ToString
 public class HandEngine implements IEngine {
   @Override
