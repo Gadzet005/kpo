@@ -9,7 +9,7 @@ checkstyle {
 	toolVersion = "10.13.0" 
 	isIgnoreFailures = false 
 	maxWarnings = 0 
-	maxErrors = 1000
+	maxErrors = 0
 }
 
 group = "com.example"
