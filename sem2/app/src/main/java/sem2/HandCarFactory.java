@@ -1,5 +1,6 @@
 package sem2;
 
+/** Фабрика автомобилей с ручным приводом */
 public class HandCarFactory implements ICarFactory<EmptyEngineParams> {
   @Override
   public Car createCar(EmptyEngineParams carParams, int carNumber) {

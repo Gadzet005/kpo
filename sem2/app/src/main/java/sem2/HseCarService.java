@@ -2,6 +2,7 @@ package sem2;
 
 import java.util.Objects;
 
+/** Сервис для продажи автомобилей HSE */
 public class HseCarService {
   private final ICarProvider carProvider;
 
@@ -12,6 +13,7 @@ public class HseCarService {
     this.customerProvider = customersProvider;
   }
 
+  /** Продажа всех автомобилей HSE */
   public void sellCars() {
     // получаем список покупателей
     var customers = customerProvider.getCustomers();
