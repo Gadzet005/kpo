@@ -35,6 +35,7 @@ dependencies {
 	testImplementation("org.mockito:mockito-core:5.0.0")
     implementation("org.slf4j:slf4j-api:2.0.16")
 	implementation("ch.qos.logback:logback-classic:1.5.16")
+	implementation("org.springframework.boot:spring-boot-starter-aop")
 }
 
 tasks.withType<Test> {
