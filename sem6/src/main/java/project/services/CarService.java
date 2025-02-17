@@ -9,13 +9,14 @@ import project.domains.Car;
 import project.domains.Customer;
 import project.interfaces.ICarFactory;
 import project.interfaces.ICarProvider;
+import project.sales.SalesObserver;
 
 /** Сервис для работы с автомобилями */
 @Slf4j
 @Component
 public class CarService implements ICarProvider {
     private final List<Car> cars = new ArrayList<>();
-
+    final List<SalesObserver> observers = new ArrayList<>();
     private int carNumberCounter = 0;
 
     /** Выдача автомобиля покупателю */

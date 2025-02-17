@@ -4,41 +4,40 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import project.domains.Customer;
-import project.factories.HandCatamaranFactory;
+import project.factories.HandCarFactory;
 import project.params.EmptyEngineParams;
-import project.report.ReportBuilder;
-import project.services.CatamaranService;
+import project.sales.ReportSalesObserver;
+import project.services.CarService;
 import project.services.CustomerStorage;
-import project.services.HseCatamaranService;
+import project.services.HseCarService;
 
 @SpringBootApplication
 public class Application {
 
     public static void main(String[] args) {
         var context = SpringApplication.run(Application.class, args);
-        var catamaranService = context.getBean(CatamaranService.class);
+
+        var carService = context.getBean(CarService.class);
         var customerStorage = context.getBean(CustomerStorage.class);
-        var hseCatamaranService = context.getBean(HseCatamaranService.class);
-        var handCarFactory = new HandCatamaranFactory();
+        var hseCarService = context.getBean(HseCarService.class);
+        var handCarFactory = new HandCarFactory();
 
-        customerStorage.addCustomer(new Customer("Bob1", 6, 4, 0));
-        customerStorage.addCustomer(new Customer("Bob2", 4, 6, 100));
-        customerStorage.addCustomer(new Customer("Bob3", 6, 6, 300));
-        customerStorage.addCustomer(new Customer("Bob4", 4, 4, 300));
+        var salesObserver = context.getBean(ReportSalesObserver.class);
+        hseCarService.addObserver(salesObserver);
 
-        var reportBuilder = new ReportBuilder()
-                .addOperation("Инициализация системы")
-                .addCustomers(customerStorage.getCustomers());
+        customerStorage.addCustomer(new Customer("Bob1", 100, 100, 0));
+        customerStorage.addCustomer(new Customer("Bob2", 100, 100, 100));
+        customerStorage.addCustomer(new Customer("Bob3", 100, 100, 300));
+        customerStorage.addCustomer(new Customer("Bob4", 100, 100, 300));
 
-        catamaranService.addCatamaran(handCarFactory,
-                EmptyEngineParams.DEFAULT);
-        catamaranService.addCatamaran(handCarFactory,
-                EmptyEngineParams.DEFAULT);
+        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
 
-        hseCatamaranService.sellCatamarans();
+        hseCarService.sellCars();
 
-        var report = reportBuilder.addOperation("Продажа автомобилей")
-                .addCustomers(customerStorage.getCustomers()).build();
+        var report = salesObserver.buildReport();
 
         System.out.println(report.toString());
     }
