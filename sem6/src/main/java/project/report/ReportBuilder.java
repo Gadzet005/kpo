@@ -11,10 +11,10 @@ public class ReportBuilder {
     StringBuilder content = new StringBuilder();
 
     public ReportBuilder addCustomers(List<Customer> customers) {
-        content.append("Покупатели:");
+        content.append("\nПокупатели:");
         customers.forEach(
-                customer -> content.append(String.format(" - %s", customer)));
-        content.append("\n");
+                customer -> content.append(String.format("\n- %s", customer)));
+        content.append("\n\n");
 
         return this;
     }

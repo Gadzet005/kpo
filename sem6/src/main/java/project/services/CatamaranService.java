@@ -12,14 +12,14 @@ import project.interfaces.ICatamaranProvider;
 public class CatamaranService implements ICatamaranProvider {
     private final List<Catamaran> catamarans = new ArrayList<>();
 
-    private int carNumberCounter = 0;
+    private int catamaranNumberCounter = 0;
 
     @Override
     public Catamaran takeCatamaran(Customer customer) {
-        var filteredCars = catamarans.stream()
-                .filter(car -> car.isCompatible(customer)).toList();
+        var filteredCatamarans = catamarans.stream()
+                .filter(catamaran -> catamaran.isCompatible(customer)).toList();
 
-        var firstCatamaran = filteredCars.stream().findFirst();
+        var firstCatamaran = filteredCatamarans.stream().findFirst();
 
         firstCatamaran.ifPresent(catamarans::remove);
 
@@ -28,7 +28,7 @@ public class CatamaranService implements ICatamaranProvider {
 
     public <TParams> void addCatamaran(ICatamaranFactory<TParams> carFactory,
             TParams carParams) {
-        var car = carFactory.createCar(carParams, ++carNumberCounter);
+        var car = carFactory.createCar(carParams, ++catamaranNumberCounter);
 
         catamarans.add(car);
     }
