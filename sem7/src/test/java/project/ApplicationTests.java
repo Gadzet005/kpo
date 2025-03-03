@@ -1,58 +1,34 @@
 package project;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import project.domains.Customer;
-import project.factories.HandCarFactory;
-import project.factories.LevitatingCarFactory;
-import project.factories.PedalCarFactory;
-import project.params.EmptyEngineParams;
-import project.params.PedalEngineParams;
-import project.services.CarService;
-import project.services.CustomerStorage;
-import project.services.HseCarService;
+import project.services.Hse;
 
 @SpringBootTest
 class ApplicationTests {
     @Autowired
-    private HseCarService hseCarService;
-    @Autowired
-    private CarService carService;
-    @Autowired
-    private CustomerStorage customStorage;
-    @Autowired
-    private HandCarFactory handCarFactory;
-    @Autowired
-    private LevitatingCarFactory levCarFactory;
-    @Autowired
-    private PedalCarFactory pedalCarFactory;
+    private Hse hse;
 
     @Test
     void testMain() {
-        customStorage.addCustomer(new Customer("Bob1", 600, 600, 0));
-        customStorage.addCustomer(new Customer("Bob2", 600, 600, 100));
-        customStorage.addCustomer(new Customer("Bob3", 600, 600, 300));
-        customStorage.addCustomer(new Customer("Bob4", 600, 600, 300));
+        hse.addCustomer("Ivan1", 6, 4, 150);
+        hse.addCustomer("Maksim", 4, 6, 80);
+        hse.addCustomer("Petya", 6, 6, 20);
+        hse.addCustomer("Nikita", 4, 4, 300);
 
-        carService.addCar(pedalCarFactory, new PedalEngineParams(10));
-        carService.addCar(pedalCarFactory, new PedalEngineParams(20));
-        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
-        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
-        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
-        carService.addCar(levCarFactory, EmptyEngineParams.DEFAULT);
+        hse.addPedalCar(6);
+        hse.addHandCar();
+        hse.addHandCatamaran();
+        hse.addHandCatamaran();
+        hse.addCatamaranWithWheels();
+        hse.addCatamaranWithWheels();
 
-        customStorage.getCustomers().forEach((customer) -> {
-            System.out.println(customer);
-        });
+        hse.sell();
 
-        hseCarService.sellCars();
-
-        System.out.println("---------------");
-
-        customStorage.getCustomers().forEach((customer) -> {
-            System.out.println(customer);
-        });
+        assertNotNull(hse.generateReport());
     }
 }
