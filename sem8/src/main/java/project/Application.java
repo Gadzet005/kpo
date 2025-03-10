@@ -1,6 +1,7 @@
 package project;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,6 +9,7 @@ import java.io.PrintWriter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import project.data_import.CSVTransportImporter;
 import project.enums.ReportFormat;
 import project.export.transport.CsvTransportExporter;
 import project.export.transport.XmlTransportExporter;
@@ -25,12 +27,17 @@ public class Application {
         hse.addCustomer("Petya", 6, 6, 20);
         hse.addCustomer("Nikita", 4, 4, 300);
 
-        hse.addPedalCar(6);
-        hse.addHandCar();
-        hse.addHandCatamaran();
-        hse.addHandCatamaran();
-        hse.addCatamaranWithWheels();
-        hse.addCatamaranWithWheels();
+        var csvImporter = context.getBean(CSVTransportImporter.class);
+        try (FileReader reader = new FileReader("export/transport.csv")) {
+            csvImporter.importTransport(reader);
+        }
+
+        // hse.addPedalCar(6);
+        // hse.addHandCar();
+        // hse.addHandCatamaran();
+        // hse.addHandCatamaran();
+        // hse.addCatamaranWithWheels();
+        // hse.addCatamaranWithWheels();
 
         File directory = new File("export");
         if (!directory.exists()) {

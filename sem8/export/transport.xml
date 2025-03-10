@@ -13,14 +13,14 @@
     </Engine>
 </Vehicle>
 <Vehicle>
-    <VIN>3</VIN>
+    <VIN>1</VIN>
     <Type>CatamaranWithWheels</Type>
     <Engine>
         <Type>HandEngine</Type>
     </Engine>
 </Vehicle>
 <Vehicle>
-    <VIN>4</VIN>
+    <VIN>2</VIN>
     <Type>CatamaranWithWheels</Type>
     <Engine>
         <Type>HandEngine</Type>
@@ -49,6 +49,90 @@
 </Vehicle>
 <Vehicle>
     <VIN>4</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>5</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>6</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>7</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>8</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>9</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>10</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>11</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>12</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>13</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>14</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>15</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>16</VIN>
     <Type>Catamaran</Type>
     <Engine>
         <Type>HandEngine</Type>
