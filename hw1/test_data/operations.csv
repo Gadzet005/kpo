@@ -1,0 +1,101 @@
+id,type,amount,date,description,accountId,categoryId
+1,EXPENSE,50.00,2023-01-01,"Grocery shopping",1,1
+2,INCOME,1200.00,2023-01-02,"Monthly salary",2,2
+3,EXPENSE,75.00,2023-01-03,"Electricity bill",1,3
+4,INCOME,300.00,2023-01-04,"Stock dividends",1,4
+5,EXPENSE,30.00,2023-01-05,"Movie tickets",1,5
+6,EXPENSE,22.50,2023-01-06,"Public transport",1,1
+7,INCOME,500.00,2023-01-07,"Freelance project",2,2
+8,EXPENSE,100.00,2023-01-08,"Dining out",1,5
+9,INCOME,450.00,2023-01-09,"Gift from parents",3,2
+10,EXPENSE,15.00,2023-01-10,"Coffee",1,1
+11,EXPENSE,120.00,2023-01-11,"New shoes",1,5
+12,INCOME,2500.00,2023-01-12,"Year-end bonus",2,2
+13,EXPENSE,50.00,2023-01-13,"Online course",1,4
+14,INCOME,200.00,2023-01-14,"Selling old furniture",3,2
+15,EXPENSE,99.99,2023-01-15,"Birthday gift",1,5
+16,EXPENSE,5.75,2023-01-16,"Snacks",1,1
+17,INCOME,800.00,2023-01-17,"Consulting fee",2,2
+18,EXPENSE,35.00,2023-01-18,"Groceries",1,1
+19,EXPENSE,60.00,2023-01-19,"Clothing",1,5
+20,INCOME,400.00,2023-01-20,"Part-time job",2,2
+21,EXPENSE,45.00,2023-01-21,"Fitness membership",1,5
+22,EXPENSE,20.00,2023-01-22,"Lunch with friends",1,1
+23,INCOME,1500.00,2023-01-23,"Freelance design",3,2
+24,EXPENSE,69.99,2023-01-24,"Dinner at restaurant",1,5
+25,EXPENSE,10.00,2023-01-25,"Park entrance fee",1,1
+26,INCOME,550.00,2023-01-26,"Side project income",2,2
+27,EXPENSE,100.00,2023-01-27,"Book purchase",1,4
+28,INCOME,600.00,2023-01-28,"Selling handmade crafts",3,2
+29,EXPENSE,80.00,2023-01-29,"Weekend getaway",1,5
+30,EXPENSE,25.00,2023-01-30,"Dine-out",1,5
+31,INCOME,300.00,2023-02-01,"Consulting",2,2
+32,EXPENSE,200.00,2023-02-02,"Home repairs",1,4
+33,EXPENSE,90.00,2023-02-03,"Car service",1,5
+34,INCOME,250.00,2023-02-04,"Work bonus",3,2
+35,EXPENSE,45.00,2023-02-05,"Mobile bill",1,1
+36,INCOME,700.00,2023-02-06,"Online course teaching",2,2
+37,EXPENSE,60.00,2023-02-07,"Subscription",1,1
+38,EXPENSE,15.00,2023-02-08,"Stationery",1,1
+39,INCOME,1300.00,2023-02-09,"Contract work",3,2
+40,EXPENSE,50.00,2023-02-10,"Groceries",1,1
+41,EXPENSE,20.00,2023-02-11,"Snack",1,1
+42,INCOME,850.00,2023-02-12,"Freelance writing",2,2
+43,EXPENSE,150.00,2023-02-13,"New computer",1,4
+44,EXPENSE,60.00,2023-02-14,"Dinner date",1,5
+45,INCOME,400.00,2023-02-15,"Affiliate marketing",3,2
+46,EXPENSE,75.00,2023-02-16,"Movie night",1,5
+47,EXPENSE,25.00,2023-02-17,"Magazine subscription",1,1
+48,INCOME,700.00,2023-02-18,"Social media marketing",2,2
+49,EXPENSE,115.00,2023-02-19,"Home decor",1,4
+50,EXPENSE,95.00,2023-02-20,"Concert tickets",1,5
+51,INCOME,200.00,2023-02-21,"Pet sitting",3,2
+52,EXPENSE,30.00,2023-02-22,"Bus ticket",1,1
+53,EXPENSE,70.00,2023-02-23,"Sports event",1,5
+54,INCOME,400.00,2023-02-24,"Consulting gig",2,2
+55,EXPENSE,54.00,2023-02-25,"Food delivery",1,5
+56,EXPENSE,15.00,2023-02-26,"Soft drink",1,1
+57,INCOME,950.00,2023-02-27,"Graphic design project",2,2
+58,EXPENSE,125.00,2023-02-28,"Bike repair",1,5
+59,EXPENSE,20.00,2023-03-01,"Book rental",1,4
+60,INCOME,650.00,2023-03-02,"Photography session",3,2
+61,EXPENSE,40.00,2023-03-03,"Coffee meeting",1,1
+62,EXPENSE,90.00,2023-03-04,"Online workshop",1,4
+63,INCOME,725.00,2023-03-05,"Sell old electronics",2,2
+64,EXPENSE,55.00,2023-03-06,"Flowers",1,5
+65,EXPENSE,22.00,2023-03-07,"Transportation",1,1
+66,INCOME,420.00,2023-03-08,"Social media management",2,2
+67,EXPENSE,150.00,2023-03-09,"Annual insurance",1,4
+68,EXPENSE,73.00,2023-03-10,"Concert",1,5
+69,INCOME,500.00,2023-03-11,"Digital marketing",3,2
+70,EXPENSE,60.00,2023-03-12,"Weekend trip",1,5
+71,EXPENSE,35.00,2023-03-13,"Dinner with family",1,5
+72,INCOME,380.00,2023-03-14,"Pet grooming",2,2
+73,EXPENSE,150.00,2023-03-15,"New phone",1,4
+74,EXPENSE,40.00,2023-03-16,"Yoga class",1,1
+75,INCOME,200.00,2023-03-17,"Pet walking",3,2
+76,EXPENSE,25.00,2023-03-18,"Snack",1,5
+77,INCOME,600.00,2023-03-19,"Online tutoring",2,2
+78,EXPENSE,65.00,2023-03-20,"Home improvement",1,4
+79,EXPENSE,75.00,2023-03-21,"Dining out",1,5
+80,INCOME,900.00,2023-03-22,"Freelance writing",3,2
+81,EXPENSE,40.00,2023-03-23,"Lunch with a friend",1,1
+82,EXPENSE,150.00,2023-03-24,"Concert tickets",1,5
+83,INCOME,300.00,2023-03-25,"Selling crafts",2,2
+84,EXPENSE,35.00,2023-03-26,"Salon visit",1,5
+85,INCOME,700.00,2023-03-27,"Web design",2,2
+86,EXPENSE,45.00,2023-03-28,"Bookstore purchase",1,4
+87,EXPENSE,30.00,2023-03-29,"Snack",1,1
+88,INCOME,500.00,2023-03-30,"Personal training",2,2
+89,EXPENSE,80.00,2023-03-31,"Bike rental",1,1
+90,EXPENSE,95.00,2023-04-01,"Clothing purchase",1,5
+91,INCOME,280.00,2023-04-02,"Freelance video editing",3,2
+92,EXPENSE,90.00,2023-04-03,"Home cleaning services",1,4
+93,EXPENSE,20.00,2023-04-04,"Lunch at office",1,1
+94,INCOME,360.00,2023-04-05,"Side business",2,2
+95,EXPENSE,110.00,2023-04-06,"New laptop accessories",1,5
+96,EXPENSE,50.00,2023-04-07,"Gym membership",1,5
+97,INCOME,700.00,2023-04-08,"Remote job",3,2
+98,EXPENSE,45.00,2023-04-09,"Weekend getaway",1,5
+99,EXPENSE,30.00,2023-04-10,"Online course subscription",1,4
+100,INCOME,900.00,2023-04-11,"Selling digital art",2,2
