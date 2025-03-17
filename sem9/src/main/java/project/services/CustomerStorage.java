@@ -22,4 +22,17 @@ public class CustomerStorage implements ICustomerProvider {
     public void addCustomer(Customer customer) {
         customers.add(customer); // просто добавляем покупателя в список
     }
+
+    public Customer getCustomerByName(String name) {
+        for (Customer customer : customers) {
+            if (customer.getName().equals(name)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
+    public boolean deleteCustomer(String name) {
+        return customers.removeIf(customer -> customer.getName().equals(name));
+    }
 }

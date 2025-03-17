@@ -54,8 +54,6 @@ public class CarController {
     @Operation(summary = "Создать автомобиль", description = "Для PEDAL требуется pedalSize (1-15)")
     public ResponseEntity<Car> createCar(@Valid @RequestBody CarRequest request,
             BindingResult bindingResult) {
-        System.out.println(request);
-
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     bindingResult.getAllErrors().get(0).getDefaultMessage());
@@ -71,7 +69,7 @@ public class CarController {
         case EngineTypes.PEDAL -> hseFacade.addPedalCar(request.pedalSize());
         case EngineTypes.HAND -> hseFacade.addHandCar();
         case EngineTypes.LEVITATION -> hseFacade.addLevCar();
-        default -> throw new RuntimeException();
+        default -> throw new IllegalArgumentException();
         };
 
         return ResponseEntity.status(HttpStatus.CREATED).body(car);

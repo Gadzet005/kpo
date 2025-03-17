@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import project.domains.car.Car;
+import project.domains.catamaran.Catamaran;
 import project.domains.customer.Customer;
 import project.enums.ReportFormat;
 import project.export.report.ReportExporter;
@@ -93,8 +94,8 @@ public class Hse {
         return carService.addCar(levCarFactory, EmptyEngineParams.DEFAULT);
     }
 
-    public void addHandCatamaran() {
-        catamaranService.addCatamaran(handCatamaranFactory,
+    public Catamaran addHandCatamaran() {
+        return catamaranService.addCatamaran(handCatamaranFactory,
                 EmptyEngineParams.DEFAULT);
     }
 

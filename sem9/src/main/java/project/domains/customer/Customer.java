@@ -8,12 +8,13 @@ import project.domains.catamaran.Catamaran;
 
 /** Покупатель */
 @Getter
+@Setter
 @ToString
 public class Customer {
-    private final String name;
-    private final int legPower;
-    private final int handPower;
-    private final int iq;
+    private String name;
+    private int legPower;
+    private int handPower;
+    private int iq;
 
     @Setter
     private Car car;
