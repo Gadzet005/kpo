@@ -1,0 +1,266 @@
+<Vehicle>
+    <VIN>1</VIN>
+    <Type>Car</Type>
+    <Engine>
+        <Type>PedalEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>2</VIN>
+    <Type>Car</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>1</VIN>
+    <Type>CatamaranWithWheels</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>2</VIN>
+    <Type>CatamaranWithWheels</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>1</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>2</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>3</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>4</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>5</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>6</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>7</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>8</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>9</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>10</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>11</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>12</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>13</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>14</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>15</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>16</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>17</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>18</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>19</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>20</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>21</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>22</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>23</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>24</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>25</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>26</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>27</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>28</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>29</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>30</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>31</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>32</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>33</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
+<Vehicle>
+    <VIN>34</VIN>
+    <Type>Catamaran</Type>
+    <Engine>
+        <Type>HandEngine</Type>
+    </Engine>
+</Vehicle>
