@@ -1,5 +1,7 @@
 package project.commands.import_data;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +12,7 @@ import project.domains.BankAccount;
 import project.domains.Category;
 import project.domains.Operation;
 import project.serializers.SerializerMap;
+import project.serializers.exceptions.SerializerException;
 import project.storages.HSEBank;
 
 @Component
@@ -31,7 +34,12 @@ public class ImportDataCommand implements Command<Integer, ImportDataParams> {
             throw new CommandError("Unsupported import target");
         }
 
-        var objs = serializer.deserialize(params.data());
+        List<Object> objs;
+        try {
+            objs = serializer.deserialize(params.data());
+        } catch (SerializerException e) {
+            throw new CommandError("Error deserializing data" + e.getMessage());
+        }
 
         for (var obj : objs) {
             switch (params.target()) {
@@ -49,6 +57,6 @@ public class ImportDataCommand implements Command<Integer, ImportDataParams> {
             }
         }
 
-        return objs.length;
+        return objs.size();
     }
 }

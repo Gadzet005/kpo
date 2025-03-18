@@ -1,7 +1,8 @@
 package project.storages;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import project.domains.Operation;
@@ -12,7 +13,7 @@ import project.utils.IdCounter;
 
 @Component
 public class OperationStorage {
-    private IdCounter counter;
+    private IdCounter counter = new IdCounter();
     private HashMap<Integer, Operation> operations = new HashMap<>();
     private OperationFactory factory = new OperationFactory(counter);
 
@@ -34,8 +35,8 @@ public class OperationStorage {
         return operations.get(id);
     }
 
-    public Collection<Operation> getOperations() {
-        return operations.values();
+    public List<Operation> getOperations() {
+        return operations.values().stream().toList();
     }
 
     public OperationListStream getStream() {
@@ -48,5 +49,10 @@ public class OperationStorage {
 
     public Operation removeOperation(int id) {
         return operations.remove(id);
+    }
+
+    public void clear() {
+        operations.clear();
+        counter.resetCounter();
     }
 }

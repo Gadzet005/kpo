@@ -30,10 +30,10 @@ public class ShowBankAccountStatistics implements CLIFunction {
     public void execute() {
         var accountId = IntField.builder().minValue(0).name("Account ID")
                 .build().execute(reader);
-        var startDate = DateField.builder().name("Start Date").nullable(true)
+        var startDate = DateField.builder().name("Start Date").isNullable(true)
                 .description("press enter if there is no start date").build()
                 .execute(reader);
-        var endDate = DateField.builder().name("End Date").nullable(true)
+        var endDate = DateField.builder().name("End Date").isNullable(true)
                 .description("press enter if there is no end date").build()
                 .execute(reader);
 

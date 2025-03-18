@@ -4,28 +4,38 @@ import java.util.Scanner;
 
 import lombok.AllArgsConstructor;
 
-/**
- * Represents an input field that can be executed to obtain a result.
- *
- * @param <TResult> The type of result that this input field produces.
- */
 @AllArgsConstructor
 public abstract class InputField<R> {
     protected String name = "Field";
     protected String description = null;
     protected R defaultValue = null;
+    protected String defaultLabel = null;
+    protected boolean isNullable = false;
 
-    protected abstract ValidationResult<R> handleInput(String input);
+    /**
+     * Validates the given input string and returns a ValidationResult.
+     *
+     * @param str the input string to be validated
+     * @return a ValidationResult containing the validation outcome and the
+     *         parsed result if valid
+     */
+    public abstract ValidationResult<R> validate(String str);
 
+    /**
+     * Executes the input field and returns the parsed result.
+     *
+     * @param reader the Scanner to read input from the user
+     * @return parsed result
+     */
     public R execute(Scanner reader) {
         while (true) {
             System.out.print(getLabel());
 
             var input = reader.nextLine();
-            if (input.isEmpty() && defaultValue != null) {
+            if (input.isEmpty() && (isNullable || defaultValue != null)) {
                 return defaultValue;
             }
-            var validationResult = handleInput(input);
+            var validationResult = validate(input);
 
             if (validationResult.isValid()) {
                 return validationResult.result();
@@ -35,6 +45,9 @@ public abstract class InputField<R> {
     }
 
     protected String getDefaultValueLabel() {
+        if (defaultLabel != null) {
+            return defaultLabel;
+        }
         return String.valueOf(defaultValue);
     }
 

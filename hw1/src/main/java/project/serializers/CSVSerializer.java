@@ -1,11 +1,15 @@
 package project.serializers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import project.serializers.base.BaseSerializer;
 import project.serializers.converters.base.FieldConverter;
 import project.serializers.converters.base.FieldList;
+import project.serializers.exceptions.ConvertException;
+import project.serializers.exceptions.SerializerException;
 
 public class CSVSerializer<T> extends BaseSerializer<T> {
     private static final String DELIMITER = ",";
@@ -15,15 +19,14 @@ public class CSVSerializer<T> extends BaseSerializer<T> {
     }
 
     @Override
-    public String serialize(T[] objects) {
-        if (objects == null || objects.length == 0) {
+    public String serialize(List<T> objects) throws SerializerException {
+        if (objects.isEmpty()) {
             return "";
         }
 
-        FieldList[] converted = Arrays.stream(objects).map(converter::convert)
-                .toArray(FieldList[]::new);
+        var converted = converter.convertList(objects);
 
-        String[] header = converted[0].names();
+        String[] header = converted.get(0).names();
 
         StringBuilder csvBuilder = new StringBuilder();
         csvBuilder.append(String.join(DELIMITER, header)).append("\n");
@@ -37,26 +40,33 @@ public class CSVSerializer<T> extends BaseSerializer<T> {
         return csvBuilder.toString().trim();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public T[] deserialize(String data) {
-        var lines = data.lines().toArray(String[]::new);
+    private T convertRow(String[] header, String[] row)
+            throws ConvertException {
+        var fields = new FieldList();
+        for (int i = 0; i < header.length; i++) {
+            fields.add(header[i], row[i]);
+        }
+        return converter.convertBack(fields);
+    }
 
-        if (lines.length == 0) {
-            return (T[]) new Object[0];
+    @Override
+    public List<T> deserialize(String data) throws SerializerException {
+        var lines = data.lines().toList();
+
+        if (lines.isEmpty()) {
+            return List.of();
         }
 
-        var header = lines[0].split(DELIMITER);
-
-        return (T[]) Arrays.stream(lines).skip(1).map(line -> {
+        var header = lines.get(0).split(DELIMITER);
+        ArrayList<T> result = new ArrayList<>();
+        for (var line : lines.subList(1, lines.size())) {
             var values = line.split(DELIMITER);
-            var fields = new FieldList();
-
-            for (int i = 0; i < header.length; i++) {
-                fields.add(header[i], values[i]);
+            if (values.length != header.length) {
+                throw new SerializerException("Invalid CSV format");
             }
+            result.add(convertRow(header, values));
+        }
 
-            return converter.convertBack(fields);
-        }).toArray();
+        return result;
     }
 }

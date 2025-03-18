@@ -1,7 +1,7 @@
 package project.storages;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ import project.utils.IdCounter;
 @Component
 public class BankAccountStorage {
     private HashMap<Integer, BankAccount> accounts = new HashMap<>();
-    private IdCounter counter;
+    private IdCounter counter = new IdCounter();
     private BankAccountFactory factory = new BankAccountFactory(counter);
 
     /**
@@ -59,8 +59,13 @@ public class BankAccountStorage {
         return accounts.get(id);
     }
 
-    public Collection<BankAccount> getAccounts() {
-        return accounts.values();
+    /**
+     * Retrieves all the bank accounts currently stored in the storage.
+     *
+     * @return A collection of all the bank accounts stored.
+     */
+    public List<BankAccount> getAccounts() {
+        return accounts.values().stream().toList();
     }
 
     /**
@@ -82,5 +87,13 @@ public class BankAccountStorage {
      */
     public BankAccount removeAccount(int id) {
         return accounts.remove(id);
+    }
+
+    /**
+     * Removes all the bank accounts from the storage.
+     */
+    public void clear() {
+        accounts.clear();
+        counter.resetCounter();
     }
 }

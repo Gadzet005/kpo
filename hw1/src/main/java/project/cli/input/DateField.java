@@ -12,12 +12,11 @@ public class DateField extends InputField<Date> {
     private static final String DEFAULT_FORMAT_STRING = "dd-MM-yyyy";
     private DateFormat dateFormat;
     private String dateFormatString;
-    private boolean nullable;
 
     @Builder
     public DateField(String name, String description, String dateFormatString,
-            Boolean nullable) {
-        super(name, description, null);
+            boolean isNullable) {
+        super(name, description, null, null, isNullable);
         if (description == null) {
             this.description = "date";
         }
@@ -25,19 +24,12 @@ public class DateField extends InputField<Date> {
         this.dateFormatString = dateFormatString == null ? DEFAULT_FORMAT_STRING
                 : dateFormatString;
         this.dateFormat = new SimpleDateFormat(this.dateFormatString);
-        this.nullable = nullable != null && nullable;
     }
 
     @Override
-    protected ValidationResult<Date> handleInput(String input) {
-        if (input.equals("") && nullable) {
-            return ValidationResult.valid(null);
-        }
+    public ValidationResult<Date> validate(String str) {
         try {
-            if (input.equalsIgnoreCase("today")) {
-                return ValidationResult.valid(new Date());
-            }
-            return ValidationResult.valid(dateFormat.parse(input));
+            return ValidationResult.valid(dateFormat.parse(str));
         } catch (Exception e) {
             return ValidationResult.invalid(
                     "Invalid date format. Expected: " + dateFormatString);

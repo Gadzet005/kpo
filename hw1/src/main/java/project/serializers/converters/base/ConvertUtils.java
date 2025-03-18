@@ -4,42 +4,57 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
+import project.serializers.exceptions.ConvertException;
+
 public class ConvertUtils {
     private ConvertUtils() {
     }
 
-    public static int toInt(Object obj) {
+    public static int toInt(Object obj) throws ConvertException {
         switch (obj) {
         case Integer idInt:
             return idInt;
         case Double idDouble:
             return (int) Math.round(idDouble);
         case String idString:
-            return Integer.parseInt(idString);
+            try {
+                return Integer.parseInt(idString);
+            } catch (NumberFormatException e) {
+                throw new ConvertException(
+                        "Can't parse integer: " + obj.getClass().getName());
+            }
         default:
-            throw new IllegalArgumentException("Invalid int format.");
+            throw new ConvertException(
+                    "Invalid integer format: " + obj.getClass().getName());
         }
     }
 
-    public static double toDouble(Object obj) {
+    public static double toDouble(Object obj) throws ConvertException {
         switch (obj) {
         case Double balanceDouble:
             return balanceDouble;
         case String balanceString:
-            return Double.parseDouble(balanceString);
+            try {
+                return Double.parseDouble(balanceString);
+            } catch (NumberFormatException e) {
+                throw new ConvertException(
+                        "Can't parse double: " + obj.getClass().getName());
+            }
         default:
-            throw new IllegalArgumentException("Invalid double format.");
+            throw new ConvertException(
+                    "Invalid double format: " + obj.getClass().getName());
         }
     }
 
-    public static boolean toBoolean(Object obj) {
+    public static boolean toBoolean(Object obj) throws ConvertException {
         switch (obj) {
         case Boolean isTrue:
             return isTrue;
         case String isTrueString:
             return Boolean.parseBoolean(isTrueString);
         default:
-            throw new IllegalArgumentException("Invalid boolean format.");
+            throw new ConvertException(
+                    "Invalid boolean format: " + obj.getClass().getName());
         }
     }
 
@@ -51,11 +66,12 @@ public class ConvertUtils {
         return Enum.valueOf(enumClass, ConvertUtils.toString(obj));
     }
 
-    public static Date toDate(Object obj, DateFormat format) {
+    public static Date toDate(Object obj, DateFormat format)
+            throws ConvertException {
         try {
             return format.parse(ConvertUtils.toString(obj));
         } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid date format.");
+            throw new ConvertException("Invalid date format.");
         }
     }
 }

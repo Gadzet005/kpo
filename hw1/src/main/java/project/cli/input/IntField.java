@@ -10,8 +10,9 @@ public class IntField extends InputField<Integer> {
 
     @Builder
     public IntField(String name, String description, Integer defaultValue,
-            Integer minValue, Integer maxValue) {
-        super(name, description, defaultValue);
+            String defaultLabel, Integer minValue, Integer maxValue,
+            boolean isNullable) {
+        super(name, description, defaultValue, defaultLabel, isNullable);
         this.minValue = minValue;
         this.maxValue = maxValue;
         if (description == null) {
@@ -20,9 +21,9 @@ public class IntField extends InputField<Integer> {
     }
 
     @Override
-    protected ValidationResult<Integer> handleInput(String input) {
+    public ValidationResult<Integer> validate(String str) {
         try {
-            var value = Integer.parseInt(input);
+            var value = Integer.parseInt(str);
             if (minValue != null && value < minValue) {
                 return ValidationResult.invalid(String.format(
                         "Value must be greater than or equal to %s", minValue));

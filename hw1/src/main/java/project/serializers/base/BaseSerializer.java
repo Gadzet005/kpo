@@ -1,4 +1,4 @@
-package project.serializers;
+package project.serializers.base;
 
 import project.serializers.converters.base.FieldConverter;
 

@@ -21,6 +21,20 @@ import project.utils.FileUtils;
 
 @Component
 public class ImportData implements CLIFunction {
+    private static StringField importFilesInput = StringField.builder()
+            .name("Files to import").defaultValue(
+                    // TODO make this better
+                    "test_data/bank_accounts.csv, test_data/categories.csv, test_data/operations.csv")
+            .defaultLabel("test_data/*.csv").build();
+    private static ChoiceField<Object> importTypeInput = ChoiceField.builder()
+            .name("Import type")
+            .choices(EnumUtils.getNames(ImportExportType.class))
+            .choiceFormat(choise -> choise.toString().toLowerCase()).build();
+    private static ChoiceField<Object> importTargetInput = ChoiceField.builder()
+            .name("Import target")
+            .choices(EnumUtils.getNames(ImportExportTarget.class))
+            .choiceFormat(choise -> choise.toString().toLowerCase()).build();
+
     private Scanner reader;
     private CommandWithTimer<Integer, ImportDataParams> importDataCommand;
 
@@ -28,6 +42,30 @@ public class ImportData implements CLIFunction {
     public ImportData(Scanner reader, ImportDataCommand importDataCommand) {
         this.reader = reader;
         this.importDataCommand = new CommandWithTimer<>(importDataCommand);
+    }
+
+    private ImportExportType importType(String raw) {
+        try {
+            var type = ImportExportType.valueOf(raw);
+            System.out.println("Automatically detected import type as "
+                    + type.toString().toLowerCase());
+            return type;
+        } catch (IllegalArgumentException e) {
+            var typeRaw = (String) importTypeInput.execute(reader);
+            return ImportExportType.valueOf(typeRaw);
+        }
+    }
+
+    private ImportExportTarget importTarget(String raw) {
+        try {
+            var target = ImportExportTarget.valueOf(raw);
+            System.out.println("Automatically detected import target as "
+                    + target.toString().toLowerCase());
+            return target;
+        } catch (IllegalArgumentException e) {
+            var targetRaw = (String) importTargetInput.execute(reader);
+            return ImportExportTarget.valueOf(targetRaw);
+        }
     }
 
     private void importFile(String filePath) {
@@ -44,32 +82,8 @@ public class ImportData implements CLIFunction {
 
         var fileBaseName = FileUtils.getBaseName(filePath);
         var fileExt = FileUtils.getExtension(filePath);
-
-        ImportExportType type;
-        try {
-            type = ImportExportType.valueOf(fileExt.toUpperCase());
-            System.out.println("Automatically detected import type as "
-                    + type.toString().toLowerCase());
-        } catch (IllegalArgumentException e) {
-            var typeRaw = (String) ChoiceField.builder().name("Import type")
-                    .choices(EnumUtils.getNames(ImportExportType.class))
-                    .choiceFormat(choise -> choise.toString().toLowerCase())
-                    .build().execute(reader);
-            type = ImportExportType.valueOf(typeRaw);
-        }
-
-        ImportExportTarget target;
-        try {
-            target = ImportExportTarget.valueOf(fileBaseName.toUpperCase());
-            System.out.println("Automatically detected import target as "
-                    + target.toString().toLowerCase());
-        } catch (IllegalArgumentException e) {
-            var targetRaw = (String) ChoiceField.builder().name("Import target")
-                    .choices(EnumUtils.getNames(ImportExportTarget.class))
-                    .choiceFormat(choise -> choise.toString().toLowerCase())
-                    .build().execute(reader);
-            target = ImportExportTarget.valueOf(targetRaw);
-        }
+        ImportExportType type = importType(fileExt.toUpperCase());
+        ImportExportTarget target = importTarget(fileBaseName.toUpperCase());
 
         try {
             var result = importDataCommand
@@ -84,9 +98,7 @@ public class ImportData implements CLIFunction {
 
     @Override
     public void execute() {
-        var raw = StringField.builder().name("Files to import").defaultValue(
-                "test_data/bank_accounts.csv, test_data/categories.csv, test_data/operations.csv")
-                .build().execute(reader);
+        var raw = importFilesInput.execute(reader);
         var files = raw.split(",");
         for (var file : files) {
             importFile(file.trim());

@@ -4,11 +4,12 @@ import org.springframework.stereotype.Component;
 
 import project.domains.BankAccount;
 import project.serializers.converters.base.ConvertUtils;
-import project.serializers.converters.base.FieldConverter;
+import project.serializers.converters.base.BaseFieldConverter;
 import project.serializers.converters.base.FieldList;
+import project.serializers.exceptions.ConvertException;
 
 @Component
-public class BankAccountFieldConverter implements FieldConverter<BankAccount> {
+public class BankAccountFieldConverter extends BaseFieldConverter<BankAccount> {
     @Override
     public FieldList convert(BankAccount obj) {
         var fields = new FieldList();
@@ -19,7 +20,7 @@ public class BankAccountFieldConverter implements FieldConverter<BankAccount> {
     }
 
     @Override
-    public BankAccount convertBack(FieldList map) {
+    public BankAccount convertBack(FieldList map) throws ConvertException {
         var id = ConvertUtils.toInt(map.get("id"));
         var name = ConvertUtils.toString(map.get("name"));
         var balance = ConvertUtils.toDouble(map.get("balance"));

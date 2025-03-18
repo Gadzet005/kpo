@@ -6,8 +6,9 @@ import project.cli.input.base.ValidationResult;
 
 public class BoolField extends InputField<Boolean> {
     @Builder
-    public BoolField(String name, String description, Boolean defaultValue) {
-        super(name, description, defaultValue);
+    public BoolField(String name, String description, Boolean defaultValue,
+            String defaultLabel, boolean isNullable) {
+        super(name, description, defaultValue, defaultLabel, isNullable);
         if (this.defaultValue == null) {
             this.defaultValue = true;
         }
@@ -17,10 +18,10 @@ public class BoolField extends InputField<Boolean> {
     }
 
     @Override
-    protected ValidationResult<Boolean> handleInput(String input) {
-        if (input.equalsIgnoreCase("t")) {
+    public ValidationResult<Boolean> validate(String str) {
+        if (str.equalsIgnoreCase("t")) {
             return ValidationResult.valid(true);
-        } else if (input.equalsIgnoreCase("f")) {
+        } else if (str.equalsIgnoreCase("f")) {
             return ValidationResult.valid(false);
         } else {
             return ValidationResult

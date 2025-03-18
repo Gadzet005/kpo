@@ -1,7 +1,7 @@
 package project.storages.utils;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Stream;
 
 import project.consts.OperationType;
@@ -19,16 +19,18 @@ public class OperationListStream {
         return this;
     }
 
-    public OperationListStream filterByAmountRange(double min, double max) {
+    public OperationListStream filterByAmountRange(Double min, Double max) {
         operations = operations
-                .filter(op -> op.getAmount() >= min && op.getAmount() <= max);
+                .filter(op -> (min == null || op.getAmount() >= min)
+                        && (max == null || op.getAmount() <= max));
         return this;
     }
 
     public OperationListStream filterByDateRange(Date startDate, Date endDate) {
-        operations = operations.filter(
-                op -> (startDate == null || op.getDate().after(startDate))
-                        && (endDate == null || op.getDate().before(endDate)));
+        operations = operations.filter(op -> (startDate == null
+                || op.getDate().after(startDate) || op.getDate() == startDate)
+                && (endDate == null || op.getDate().before(endDate))
+                || op.getDate() == endDate);
         return this;
     }
 
@@ -44,7 +46,7 @@ public class OperationListStream {
         return this;
     }
 
-    public Collection<Operation> toList() {
+    public List<Operation> toList() {
         return operations.toList();
     }
 

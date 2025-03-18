@@ -11,9 +11,11 @@ public class ChoiceField<T> extends InputField<T> {
     private Function<T, String> choiceFormat;
 
     @Builder
-    public ChoiceField(String name, String description, T[] choices,
-            Function<T, String> choiceFormat) {
-        super(name, description, choices.length > 0 ? choices[0] : null);
+    public ChoiceField(String name, String description, String defaultLabel,
+            T[] choices, Function<T, String> choiceFormat) {
+        super(name, description, choices.length > 0 ? choices[0] : null,
+                defaultLabel, false);
+
         this.choices = choices;
         this.choiceFormat = choiceFormat;
         if (this.description == null) {
@@ -44,9 +46,9 @@ public class ChoiceField<T> extends InputField<T> {
     }
 
     @Override
-    protected ValidationResult<T> handleInput(String input) {
+    public ValidationResult<T> validate(String str) {
         try {
-            var choiceIndex = Integer.parseInt(input) - 1;
+            var choiceIndex = Integer.parseInt(str) - 1;
             if (choiceIndex < 0 || choiceIndex >= choices.length) {
                 return ValidationResult.invalid("Invalid choice");
             }

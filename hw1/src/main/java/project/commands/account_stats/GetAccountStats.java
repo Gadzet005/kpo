@@ -1,7 +1,6 @@
 package project.commands.account_stats;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,7 @@ import project.storages.utils.OperationListStream;
 @Component
 public class GetAccountStats
         implements Command<GetAccountStatsResult, GetAccountStatsParams> {
-    public record Params(int accountId, Date start, Date end) {
-    }
-
-    HSEBank bank;
+    private HSEBank bank;
 
     @Autowired
     GetAccountStats(HSEBank bank) {

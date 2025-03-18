@@ -6,7 +6,7 @@ public class FileUtils {
 
     public static String getFileName(String filePath) {
         int lastIndex = filePath.lastIndexOf("/");
-        if (lastIndex > 0) {
+        if (lastIndex >= 0) {
             return filePath.substring(lastIndex + 1);
         }
         return filePath;
@@ -15,7 +15,7 @@ public class FileUtils {
     public static String getBaseName(String filePath) {
         String fileName = getFileName(filePath);
         int lastIndex = fileName.lastIndexOf(".");
-        if (lastIndex > 0) {
+        if (lastIndex >= 0) {
             return fileName.substring(0, lastIndex);
         }
         return fileName;
@@ -24,7 +24,7 @@ public class FileUtils {
     public static String getExtension(String filePath) {
         String fileName = getFileName(filePath);
         int lastIndex = fileName.lastIndexOf(".");
-        if (lastIndex > 0) {
+        if (lastIndex >= 0) {
             return fileName.substring(lastIndex + 1);
         }
         return "";

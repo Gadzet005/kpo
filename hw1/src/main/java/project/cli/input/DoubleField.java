@@ -7,13 +7,15 @@ import project.cli.input.base.InputField;
 import project.cli.input.base.ValidationResult;
 
 public class DoubleField extends InputField<Double> {
+    private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private Double minValue;
     private Double maxValue;
 
     @Builder
     public DoubleField(String name, String description, Double defaultValue,
-            Double minValue, Double maxValue) {
-        super(name, description, defaultValue);
+            String defaultLabel, Double minValue, Double maxValue,
+            boolean isNullable) {
+        super(name, description, defaultValue, defaultLabel, isNullable);
         this.minValue = minValue;
         this.maxValue = maxValue;
         if (description == null) {
@@ -22,19 +24,18 @@ public class DoubleField extends InputField<Double> {
     }
 
     @Override
-    protected ValidationResult<Double> handleInput(String input) {
-        DecimalFormat df = new DecimalFormat("#.##");
+    public ValidationResult<Double> validate(String str) {
         try {
-            var value = Double.parseDouble(input);
+            var value = Double.parseDouble(str);
             if (minValue != null && value < minValue) {
                 return ValidationResult.invalid(String.format(
                         "Value must be greater than or equal to %s",
-                        df.format(minValue)));
+                        decimalFormat.format(minValue)));
             }
             if (maxValue != null && value > maxValue) {
                 return ValidationResult.invalid(
                         String.format("Value must be less than or equal to %s",
-                                df.format(maxValue)));
+                                decimalFormat.format(maxValue)));
             }
             return ValidationResult.valid(value);
         } catch (NumberFormatException e) {

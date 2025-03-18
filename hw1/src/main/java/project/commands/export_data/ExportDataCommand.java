@@ -1,7 +1,7 @@
 package project.commands.export_data;
 
-import java.io.IOException;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,10 +10,11 @@ import project.commands.Command;
 import project.commands.CommandError;
 import project.consts.ImportExportTarget;
 import project.serializers.SerializerMap;
+import project.serializers.exceptions.SerializerException;
 import project.storages.HSEBank;
 
 @Component
-public class ExportDataCommand implements Command<Integer, ExportDataParams> {
+public class ExportDataCommand implements Command<String, ExportDataParams> {
     private HSEBank bank;
     private SerializerMap serializerMap;
 
@@ -23,22 +24,22 @@ public class ExportDataCommand implements Command<Integer, ExportDataParams> {
         this.serializerMap = serializerMap;
     }
 
-    private Collection<? extends Object> getExportObjects(
-            ImportExportTarget target) throws CommandError {
+    private List<Object> getExportObjects(ImportExportTarget target)
+            throws CommandError {
         switch (target) {
         case ImportExportTarget.OPERATIONS:
-            return bank.getOperationStorage().getOperations();
+            return new ArrayList<>(bank.getOperationStorage().getOperations());
         case ImportExportTarget.CATEGORIES:
-            return bank.getCategoryStorage().getCategories();
+            return new ArrayList<>(bank.getCategoryStorage().getCategories());
         case ImportExportTarget.BANK_ACCOUNTS:
-            return bank.getAccountStorage().getAccounts();
+            return new ArrayList<>(bank.getAccountStorage().getAccounts());
         default:
             throw new CommandError("Unsupported export target");
         }
     }
 
     @Override
-    public Integer execute(ExportDataParams params) throws CommandError {
+    public String execute(ExportDataParams params) throws CommandError {
         var serializer = serializerMap.getSerializer(params.type(),
                 params.target());
         if (serializer == null) {
@@ -46,14 +47,11 @@ public class ExportDataCommand implements Command<Integer, ExportDataParams> {
         }
 
         var objs = getExportObjects(params.target());
-        var data = serializer.serialize(objs.toArray());
-        try {
-            params.writer().write(data);
-        } catch (IOException e) {
-            throw new CommandError("Error writing to output stream" + e);
-        }
 
-        // TODO: return real number of exported objects
-        return objs.size();
+        try {
+            return serializer.serialize(objs);
+        } catch (SerializerException e) {
+            throw new CommandError("Error serializing data" + e.getMessage());
+        }
     }
 }

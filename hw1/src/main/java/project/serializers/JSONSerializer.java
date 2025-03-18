@@ -1,13 +1,17 @@
 package project.serializers;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import project.serializers.base.BaseSerializer;
 import project.serializers.converters.base.FieldConverter;
 import project.serializers.converters.base.FieldList;
+import project.serializers.exceptions.ConvertException;
+import project.serializers.exceptions.SerializerException;
 
 public class JSONSerializer<T> extends BaseSerializer<T> {
     private static TypeToken<Map<String, Object>[]> arrayType = new TypeToken<>() {
@@ -19,18 +23,33 @@ public class JSONSerializer<T> extends BaseSerializer<T> {
     }
 
     @Override
-    public String serialize(T[] objects) {
-        var converted = Arrays.stream(objects)
-                .map(obj -> converter.convert(obj).toMap()).toArray();
-        return gson.toJson(converted);
+    public String serialize(List<T> objects) throws SerializerException {
+        var converted = converter.convertList(objects).stream()
+                .map(FieldList::toMap).toList();
+
+        try {
+            return gson.toJson(converted);
+        } catch (Exception e) {
+            throw new SerializerException(
+                    "Error serializing to JSON: " + e.getMessage());
+        }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public T[] deserialize(String json) {
-        var array = gson.fromJson(json, arrayType);
-        return (T[]) Arrays.stream(array)
-                .map(map -> converter.convertBack(new FieldList(map)))
-                .toArray();
+    public List<T> deserialize(String json) throws ConvertException {
+        Map<String, Object>[] array;
+        try {
+            array = gson.fromJson(json, arrayType);
+        } catch (Exception e) {
+            throw new ConvertException(
+                    "Error deserializing from JSON: " + e.getMessage());
+        }
+
+        ArrayList<T> result = new ArrayList<>();
+        for (Map<String, Object> map : array) {
+            result.add(converter.convertBack(new FieldList(map)));
+        }
+
+        return result;
     }
 }

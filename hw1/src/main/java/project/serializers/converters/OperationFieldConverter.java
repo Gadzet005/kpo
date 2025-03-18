@@ -8,13 +8,16 @@ import org.springframework.stereotype.Component;
 import project.consts.OperationType;
 import project.domains.Operation;
 import project.serializers.converters.base.ConvertUtils;
-import project.serializers.converters.base.FieldConverter;
+import project.serializers.converters.base.BaseFieldConverter;
 import project.serializers.converters.base.FieldList;
+import project.serializers.exceptions.ConvertException;
 import project.storages.HSEBank;
 
 @Component
-public class OperationFieldConverter implements FieldConverter<Operation> {
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+public class OperationFieldConverter extends BaseFieldConverter<Operation> {
+    public static final String DATE_FORMAT_STRING = "dd-MM-yyyy";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat(
+            DATE_FORMAT_STRING);
     private HSEBank bank;
 
     @Autowired
@@ -36,7 +39,7 @@ public class OperationFieldConverter implements FieldConverter<Operation> {
     }
 
     @Override
-    public Operation convertBack(FieldList map) {
+    public Operation convertBack(FieldList map) throws ConvertException {
         var id = ConvertUtils.toInt(map.get("id"));
         var type = ConvertUtils.toEnum(map.get("type"), OperationType.class);
         var amount = ConvertUtils.toDouble(map.get("amount"));

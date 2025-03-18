@@ -5,10 +5,11 @@ import org.springframework.stereotype.Component;
 
 import project.consts.ImportExportTarget;
 import project.consts.ImportExportType;
+import project.serializers.base.Serializer;
 import project.serializers.converters.BankAccountFieldConverter;
 import project.serializers.converters.CategoryFieldConverter;
 import project.serializers.converters.OperationFieldConverter;
-import project.serializers.converters.base.FieldConverter;
+import project.serializers.converters.base.BaseFieldConverter;
 
 @Component
 public class SerializerMap {
@@ -25,7 +26,7 @@ public class SerializerMap {
         this.bankAccountConverter = bankAccountConverter;
     }
 
-    private FieldConverter<?> getConverter(ImportExportTarget target) {
+    private BaseFieldConverter<?> getConverter(ImportExportTarget target) {
         switch (target) {
         case ImportExportTarget.OPERATIONS:
             return operationConverter;
@@ -41,7 +42,7 @@ public class SerializerMap {
     @SuppressWarnings("unchecked")
     public Serializer<Object> getSerializer(ImportExportType type,
             ImportExportTarget target) {
-        FieldConverter<?> converter = getConverter(target);
+        BaseFieldConverter<?> converter = getConverter(target);
         switch (type) {
         case JSON:
             return (Serializer<Object>) new JSONSerializer<>(converter);

@@ -5,11 +5,12 @@ import org.springframework.stereotype.Component;
 import project.consts.OperationType;
 import project.domains.Category;
 import project.serializers.converters.base.ConvertUtils;
-import project.serializers.converters.base.FieldConverter;
+import project.serializers.converters.base.BaseFieldConverter;
 import project.serializers.converters.base.FieldList;
+import project.serializers.exceptions.ConvertException;
 
 @Component
-public class CategoryFieldConverter implements FieldConverter<Category> {
+public class CategoryFieldConverter extends BaseFieldConverter<Category> {
     @Override
     public FieldList convert(Category obj) {
         var fields = new FieldList();
@@ -20,7 +21,7 @@ public class CategoryFieldConverter implements FieldConverter<Category> {
     }
 
     @Override
-    public Category convertBack(FieldList map) {
+    public Category convertBack(FieldList map) throws ConvertException {
         var id = ConvertUtils.toInt(map.get("id"));
         var name = ConvertUtils.toString(map.get("name"));
         var type = ConvertUtils.toEnum(map.get("type"), OperationType.class);

@@ -1,6 +1,6 @@
 package project.cli.functions;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 
 import project.cli.input.IntField;
 import project.commands.CommandWithTimer;
-import project.commands.account_operations.GetBankAccountOperations;
+import project.commands.account_operations.GetAccountOperations;
 import project.domains.Operation;
 
 @Component
 public class ShowBankAccountOperations implements CLIFunction {
     private Scanner reader;
-    private CommandWithTimer<Collection<Operation>, Integer> getBankAccountOperations;
+    private CommandWithTimer<List<Operation>, Integer> getBankAccountOperations;
 
     @Autowired
     public ShowBankAccountOperations(Scanner reader,
-            GetBankAccountOperations getBankAccountOperations) {
+            GetAccountOperations getBankAccountOperations) {
         this.reader = reader;
         this.getBankAccountOperations = new CommandWithTimer<>(
                 getBankAccountOperations);
@@ -30,7 +30,7 @@ public class ShowBankAccountOperations implements CLIFunction {
                 .build().execute(reader);
 
         long duration;
-        Collection<Operation> operations;
+        List<Operation> operations;
         try {
             var res = getBankAccountOperations.execute(accountId);
             duration = res.duration();

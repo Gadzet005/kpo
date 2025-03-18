@@ -11,6 +11,7 @@ public class BankAccount {
     @Getter
     private int id;
     @Getter
+    @Setter
     private String name;
     @Getter
     @Setter

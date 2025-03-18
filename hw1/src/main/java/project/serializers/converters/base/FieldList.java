@@ -7,6 +7,10 @@ import java.util.Map;
 record Field(String name, Object value) {
 }
 
+/**
+ * FieldList is convenient format for serializer. It's just Adapter of array
+ * with elements: (name: String, value: Object)
+ */
 public class FieldList {
     private ArrayList<Field> fields = new ArrayList<>();
 

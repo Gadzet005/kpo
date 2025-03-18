@@ -1,7 +1,7 @@
 package project.storages;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -12,7 +12,7 @@ import project.utils.IdCounter;
 
 @Component
 public class CategoryStorage {
-    private IdCounter counter;
+    private IdCounter counter = new IdCounter();
     private HashMap<Integer, Category> categories = new HashMap<>();
     private CategoryFactory factory = new CategoryFactory(counter);
 
@@ -34,8 +34,8 @@ public class CategoryStorage {
         return categories.get(id);
     }
 
-    public Collection<Category> getCategories() {
-        return categories.values();
+    public List<Category> getCategories() {
+        return categories.values().stream().toList();
     }
 
     public boolean hasCategory(int id) {
@@ -44,5 +44,10 @@ public class CategoryStorage {
 
     public Category removeCategory(int id) {
         return categories.remove(id);
+    }
+
+    public void clear() {
+        categories.clear();
+        counter.resetCounter();
     }
 }
