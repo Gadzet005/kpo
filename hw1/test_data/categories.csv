@@ -1,0 +1,6 @@
+id,name,type
+1,Groceries,EXPENSE
+2,Salary,INCOME
+3,Utilities,EXPENSE
+4,Investment,INCOME
+5,Entertainment,EXPENSE
