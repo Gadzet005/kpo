@@ -3,7 +3,6 @@ package project.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import project.domains.Catamaran;
 import project.domains.Customer;
 import project.factories.HandCarFactory;
 import project.factories.HandCatamaranFactory;
