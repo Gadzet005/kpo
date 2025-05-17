@@ -1,0 +1,92 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /
+
+grpc:
+  server:
+    port: 9092
+
+spring:
+  application:
+    name: file-analysis-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/analysis_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: false
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+
+file:
+  storing:
+    service:
+      url: ${FILE_STORING_SERVICE_URL:localhost:9091}
+  analysis:
+    parallel-threads: 4
+    content-types:
+      text: txt,md,html,xml,json
+      image: jpg,jpeg,png,gif,bmp
+      document: pdf,doc,docx,xls,xlsx,ppt,pptx
+    max-analysis-size: 20MB
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    com.example.file.analysis: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+
+logging:
+  level:
+    com.example.file.analysis: DEBUG
+    org.springframework: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
