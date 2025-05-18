@@ -6,5 +6,5 @@ rootProject.name = "hw2"
 
 include("common_lib")
 include("api_gateway")
-include("file_analisys_service")
+include("file_analysis_service")
 include("file_storing_service")

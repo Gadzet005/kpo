@@ -1,24 +1,9 @@
-FROM eclipse-temurin:21-jdk-alpine AS build
-
-WORKDIR /workspace/app
-
-COPY gradle gradle
-COPY gradlew .
-COPY gradlew.bat .
-COPY build.gradle.kts settings.gradle.kts ./
-COPY gradle/libs.versions.toml gradle/libs.versions.toml
-
-COPY common-lib common-lib
-COPY file_storing_service file_storing_service
-
-RUN chmod +x ./gradlew
-
-RUN ./gradlew :file_storing_service:bootJar -x test
-
-FROM eclipse-temurin:21-jre-alpine
-
+FROM gradle:8.7-jdk21 AS build
 WORKDIR /app
+COPY . .
+RUN gradle :file_storing_service:build -x test --no-daemon
 
-COPY --from=build /workspace/app/file_storing_service/build/libs/*.jar app.jar
-
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+FROM openjdk:21-jdk-slim
+WORKDIR /app
+COPY --from=build /app/file_storing_service/build/libs/*.jar app.jar
+CMD ["java", "-jar", "app.jar"]

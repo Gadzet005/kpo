@@ -1,22 +1,9 @@
-FROM eclipse-temurin:21-jdk-alpine AS build
-
-WORKDIR /workspace/app
-
-COPY gradle gradle
-COPY gradlew .
-COPY gradlew.bat .
-COPY build.gradle.kts settings.gradle.kts ./
-COPY gradle/libs.versions.toml gradle/libs.versions.toml
-
-COPY common-lib common-lib
-COPY api_gateway api_gateway
-
-RUN chmod +x ./gradlew && ./gradlew :api_gateway:bootJar -x test
-
-FROM eclipse-temurin:21-jre-alpine
-
+FROM gradle:8.7-jdk21 AS build
 WORKDIR /app
+COPY . .
+RUN gradle :api_gateway:build -x test --no-daemon
 
-COPY --from=build /workspace/app/api_gateway/build/libs/*.jar app.jar
-
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+FROM openjdk:21-jdk-slim
+WORKDIR /app
+COPY --from=build /app/api_gateway/build/libs/*.jar app.jar
+CMD ["java", "-jar", "app.jar"]

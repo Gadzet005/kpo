@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "common_lib.grpc";
+option java_outer_classname = "FileAnalysisProto";
+
+package file_analysis;
+
+service FileAnalysisService {
+  rpc AnalyzeFile(FileRequest) returns (FileStat);
+  rpc GetFileWordCloud(FileRequest) returns (WordCloud);
+}
+
+message FileRequest {
+  int32 id = 1;
+}
+
+message FileStat {
+  int32 paragraphs = 1;
+  int32 words = 2;
+  int32 symbols = 3;
+}
+
+message WordCloud {
+  bytes image = 1;
+}
