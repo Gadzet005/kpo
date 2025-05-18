@@ -1,0 +1,32 @@
+server:
+  port: 8082
+
+grpc:
+  server:
+    port: 9092
+  file-store:
+    host: file-storing-service
+    port: 9091
+
+spring:
+  application:
+    name: file-analysis-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/analysis_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+
+storage:
+  location: ${FILE_STORAGE_PATH:./files}
+
+external:
+  word-cloud-url: https://quickchart.io
