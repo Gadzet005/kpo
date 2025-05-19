@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "common_lib.grpc";
+option java_outer_classname = "FileStoreProto";
+
+package file_store;
+
+service FileStoreService {
+  rpc UploadFile(FileMessage) returns (UploadFileResponse);
+  rpc DownloadFile(DownloadFileRequest) returns (FileMessage);
+}
+
+message FileMessage {
+  string content = 1;
+}
+
+message UploadFileResponse {
+  int32 id = 1;
+  bool created = 2;
+}
+
+message DownloadFileRequest {
+  int32 id = 1;
+}

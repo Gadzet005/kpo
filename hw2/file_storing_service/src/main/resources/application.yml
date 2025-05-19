@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+grpc:
+  server:
+    port: 9091
+
+spring:
+  application:
+    name: file-storing-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/storing_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+
+storage:
+    location: ${FILE_STORAGE_PATH:./files}

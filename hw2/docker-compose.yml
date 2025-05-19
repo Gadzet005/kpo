@@ -1,0 +1,104 @@
+services:
+  storing-db:
+    profiles: ["all", "db", "storage"]
+    image: postgres:16-alpine
+    container_name: storing-db
+    environment:
+      POSTGRES_DB: storing_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - storing-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  analysis-db:
+    profiles: ["all", "db", "analytics"]
+    image: postgres:16-alpine
+    container_name: analysis-db
+    environment:
+      POSTGRES_DB: analysis_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - analysis-db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api-gateway:
+    profiles: ["all", "api", "frontend"]
+    build:
+      dockerfile: api_gateway/Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - file-storing-service
+      - file-analysis-service
+    networks:
+      - app-network
+
+  file-storing-service:
+    profiles: ["all", "backend", "storage"]
+    build:
+      dockerfile: file_storing_service/Dockerfile
+    container_name: file-storing-service
+    ports:
+      - "8081:8081"
+      - "9091:9091"
+    depends_on:
+      - storing-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://storing-db:5432/storing_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      FILE_STORAGE_PATH: /app/file_storing_service/files
+    volumes:
+      - file-storage-data:/app/file_storing_service/files
+    networks:
+      - app-network
+
+  file-analysis-service:
+    profiles: ["all", "backend", "analytics"]
+    build:
+      dockerfile: file_analysis_service/Dockerfile
+    container_name: file-analysis-service
+    ports:
+      - "8082:8082"
+      - "9092:9092"
+    depends_on:
+      - analysis-db
+      - file-storing-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://analysis-db:5432/analysis_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      FILE_STORAGE_PATH: /app/file_analysis_service/files
+    volumes:
+      - file-analysis-data:/app/file_analysis_service/files
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  storing-db-data:
+  analysis-db-data:
+  file-storage-data:
+  file-analysis-data:
