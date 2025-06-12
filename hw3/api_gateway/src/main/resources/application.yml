@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
 
 spring:
   application:
@@ -7,8 +7,8 @@ spring:
 
 grpc:
   payments-service:
-    host: localhost
-    port: 8999
+    host: ${PAYMENTS_SERVICE_HOST:localhost}
+    port: ${PAYMENTS_SERVICE_GRPC_PORT:8099}
   order-service:
-    host: localhost
-    port: 8998
+    host: ${ORDER_SERVICE_HOST:localhost}
+    port: ${ORDER_SERVICE_GRPC_PORT:8098}
