@@ -28,6 +28,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
 	implementation("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
 	implementation("io.grpc:grpc-protobuf:1.54.0")

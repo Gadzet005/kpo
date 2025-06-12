@@ -23,6 +23,10 @@ public class PaymentsServiceClient {
         this.paymentsService = PaymentsServiceGrpc.newBlockingStub(channel);
     }
 
+    public PaymentsServiceClient(PaymentsServiceGrpc.PaymentsServiceBlockingStub paymentsService) {
+        this.paymentsService = paymentsService;
+    }
+
     public boolean createAccount(int userId) {
         var request = CreateAccountRequest.newBuilder().setUserId(userId).build();
         CreateAccountResponse response = paymentsService.createAccount(request);
@@ -30,6 +34,10 @@ public class PaymentsServiceClient {
     }
 
     public int deposit(int userId, int amount) throws ServiceError {
+        if (amount <= 0) {
+            throw new ServiceError(ErrorCodes.INVALID_ARGUMENTS);
+        }
+
         var request = DepositRequest.newBuilder().setUserId(userId).setAmount(amount).build();
 
         try {

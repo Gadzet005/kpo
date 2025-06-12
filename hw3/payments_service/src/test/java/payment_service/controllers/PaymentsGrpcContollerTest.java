@@ -6,7 +6,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
-
 import common_lib.errors.ErrorCodes;
 import common_lib.errors.ServiceError;
 import common_lib.grpc.CreateAccountRequest;
@@ -74,14 +73,18 @@ class PaymentsGrpcContollerTest {
     }
 
     @Test
-    void testDepositFailureAccountNotExists() throws ServiceError {
+    void testDepositFailure() throws ServiceError {
         DepositRequest request = DepositRequest.newBuilder().setUserId(1).setAmount(100).build();
+
         when(accountService.deposit(request.getUserId(), request.getAmount()))
-                .thenThrow(new ServiceError(ErrorCodes.NOT_EXISTS));
+                .thenThrow(new ServiceError(ErrorCodes.NOT_EXISTS)).thenThrow(new ServiceError(ErrorCodes.UNKNOWN))
+                .thenThrow(new RuntimeException());
 
-        paymentsGrpcContoller.deposit(request, accountBalanceResponseObserver);
+        for (int i = 0; i < 3; i++) {
+            paymentsGrpcContoller.deposit(request, accountBalanceResponseObserver);
+        }
 
-        verify(accountBalanceResponseObserver, times(1)).onError(any(StatusRuntimeException.class));
+        verify(accountBalanceResponseObserver, times(3)).onError(any(StatusRuntimeException.class));
     }
 
     @Test
@@ -96,12 +99,16 @@ class PaymentsGrpcContollerTest {
     }
 
     @Test
-    void testGetAccountBalanceFailureAccountNotExists() throws ServiceError {
+    void testGetAccountBalanceFailure() throws ServiceError {
         GetAccountBalanceRequest request = GetAccountBalanceRequest.newBuilder().setUserId(1).build();
-        when(accountService.getBalance(request.getUserId())).thenThrow(new ServiceError(ErrorCodes.NOT_EXISTS));
 
-        paymentsGrpcContoller.getAccountBalance(request, accountBalanceResponseObserver);
+        when(accountService.getBalance(request.getUserId())).thenThrow(new ServiceError(ErrorCodes.NOT_EXISTS))
+                .thenThrow(new ServiceError(ErrorCodes.UNKNOWN)).thenThrow(new RuntimeException());
 
-        verify(accountBalanceResponseObserver, times(1)).onError(any(StatusRuntimeException.class));
+        for (int i = 0; i < 3; i++) {
+            paymentsGrpcContoller.getAccountBalance(request, accountBalanceResponseObserver);
+        }
+
+        verify(accountBalanceResponseObserver, times(3)).onError(any(StatusRuntimeException.class));
     }
 }

@@ -55,6 +55,7 @@ public class PaymentsController {
     @PostMapping("/deposit")
     @Operation(summary = "Make a deposit", description = "Deposits the specified amount into the user's payment account")
     @ApiResponse(responseCode = "200", description = "Deposit successful", content = @Content(schema = @Schema(implementation = AccountBalance.class)))
+    @ApiResponse(responseCode = "400", description = "Invalid input data")
     @ApiResponse(responseCode = "404", description = "Account not found")
     @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(implementation = String.class)))
     public ResponseEntity<AccountBalance> deposit(@RequestBody DepositRequest request) {
@@ -69,6 +70,10 @@ public class PaymentsController {
             if (e.getCode().equals(ErrorCodes.NOT_EXISTS)) {
                 log.error("failed to make deposit: payment account not found: user_id = {}", request.userId());
                 return ResponseEntity.notFound().build();
+            } else if (e.getCode().equals(ErrorCodes.INVALID_ARGUMENTS)) {
+                log.error("failed to make deposit: invalid arguments: user_id = {}, amount = {}", request.userId(),
+                        request.amount());
+                return ResponseEntity.badRequest().build();
             }
 
             log.error("failed to make deposit: {}", e.toString());

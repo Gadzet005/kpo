@@ -21,7 +21,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,10 +37,8 @@ public class OrderContoller {
 
     @PostMapping("/create")
     @Operation(summary = "Create new order", description = "Creates a new order for specified user")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order created successfully", content = @Content(schema = @Schema(implementation = CreateOrderResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid input data"),
-            @ApiResponse(responseCode = "500", description = "Internal server error") })
+    @ApiResponse(responseCode = "200", description = "Order created successfully", content = @Content(schema = @Schema(implementation = CreateOrderResponse.class)))
+    @ApiResponse(responseCode = "500", description = "Internal server error")
     public ResponseEntity<CreateOrderResponse> createOrder(
             @RequestBody(description = "Order creation request", required = true, content = @Content(schema = @Schema(implementation = CreateOrderRequest.class))) @org.springframework.web.bind.annotation.RequestBody CreateOrderRequest request) {
         log.debug("creating order: user_id = {}, amount = {}, description = {}", request.userId(), request.amount(),
@@ -58,10 +55,8 @@ public class OrderContoller {
 
     @GetMapping("/user-orders/{userId}")
     @Operation(summary = "Get user orders", description = "Retrieves all orders for specified user")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Orders retrieved successfully", content = @Content(array = @ArraySchema(schema = @Schema(implementation = OrderSchema.class)))),
-            @ApiResponse(responseCode = "404", description = "User not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error") })
+    @ApiResponse(responseCode = "200", description = "Orders retrieved successfully", content = @Content(array = @ArraySchema(schema = @Schema(implementation = OrderSchema.class))))
+    @ApiResponse(responseCode = "500", description = "Internal server error")
     public ResponseEntity<List<Order>> getUserOrders(
             @Parameter(description = "ID of the user", required = true, example = "123") @PathVariable int userId) {
         log.debug("getting user orders: user_id = {}", userId);
@@ -77,10 +72,9 @@ public class OrderContoller {
 
     @GetMapping("/{orderId}")
     @Operation(summary = "Get order by ID", description = "Retrieves order details by order ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Order found", content = @Content(schema = @Schema(implementation = OrderSchema.class))),
-            @ApiResponse(responseCode = "404", description = "Order not found"),
-            @ApiResponse(responseCode = "500", description = "Internal server error") })
+    @ApiResponse(responseCode = "200", description = "Order found", content = @Content(schema = @Schema(implementation = OrderSchema.class)))
+    @ApiResponse(responseCode = "404", description = "Order not found")
+    @ApiResponse(responseCode = "500", description = "Internal server error")
     public ResponseEntity<Order> getOrder(
             @Parameter(description = "ID of the order", required = true, example = "456") @PathVariable int orderId) {
         log.debug("getting order: order_id = {}", orderId);

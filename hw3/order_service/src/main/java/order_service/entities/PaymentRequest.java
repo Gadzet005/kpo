@@ -20,4 +20,8 @@ public class PaymentRequest {
 
     private int userId;
     private int amount;
+
+    public common_lib.models.PaymentRequest toModel() {
+        return new common_lib.models.PaymentRequest(orderId, userId, amount);
+    }
 }

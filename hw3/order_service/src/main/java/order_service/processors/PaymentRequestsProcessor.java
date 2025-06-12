@@ -47,9 +47,7 @@ public class PaymentRequestsProcessor {
     @Transactional
     boolean processOne(PaymentRequest request) {
         try {
-            var r = new common_lib.models.PaymentRequest(request.getOrderId(), request.getUserId(),
-                    request.getAmount());
-            producer.sendPaymentRequest(r);
+            producer.sendPaymentRequest(request.toModel());
 
             paymentRequests.delete(request);
 

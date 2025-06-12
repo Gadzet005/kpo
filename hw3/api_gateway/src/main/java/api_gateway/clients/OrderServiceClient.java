@@ -27,6 +27,10 @@ public class OrderServiceClient {
         this.orderService = OrderServiceGrpc.newBlockingStub(channel);
     }
 
+    public OrderServiceClient(OrderServiceGrpc.OrderServiceBlockingStub orderService) {
+        this.orderService = orderService;
+    }
+
     public int createOrder(int userId, int amount, String description) {
         var request = CreateOrderRequest.newBuilder().setUserId(userId).setAmount(amount).setDescription(description)
                 .build();
