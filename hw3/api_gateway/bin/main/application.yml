@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+grpc:
+  file-store:
+    host: file-storing-service
+    port: 8999
+  file-analysis:
+    host: file-analysis-service
+    port: 8998

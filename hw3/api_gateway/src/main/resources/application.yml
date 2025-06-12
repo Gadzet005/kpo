@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+grpc:
+  payments-service:
+    host: localhost
+    port: 8999
+  order-service:
+    host: localhost
+    port: 8998
