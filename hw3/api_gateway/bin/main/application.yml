@@ -1,0 +1,14 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: api-gateway
+
+grpc:
+  payments-service:
+    host: ${PAYMENTS_SERVICE_HOST:localhost}
+    port: ${PAYMENTS_SERVICE_GRPC_PORT:8099}
+  order-service:
+    host: ${ORDER_SERVICE_HOST:localhost}
+    port: ${ORDER_SERVICE_GRPC_PORT:8098}

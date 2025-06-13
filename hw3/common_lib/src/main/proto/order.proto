@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "common_lib.grpc";
+option java_outer_classname = "OrderProto";
+
+package order;
+
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc GetUserOrders(GetUserOrdersRequest) returns (GetUserOrdersResponse);
+  rpc GetOrderInfo(GetOrderInfoRequest) returns (OrderInfo);
+}
+
+message CreateOrderRequest {
+  uint32 user_id = 1;
+  uint32 amount = 2;
+  string description = 3;
+}
+
+message CreateOrderResponse {
+  uint32 order_id = 1;
+}
+
+enum OrderStatus {
+  NEW = 0;
+  FINISHED = 1;
+  CANCELLED = 2;
+}
+
+message OrderInfo {
+  uint32 order_id = 1;
+  uint32 user_id = 2;
+  uint32 amount = 3;
+  string description = 4;
+  OrderStatus status = 5;
+  google.protobuf.Timestamp created_at = 6;
+}
+
+message GetUserOrdersRequest {
+  uint32 user_id = 1;
+}
+
+message GetUserOrdersResponse {
+  repeated OrderInfo orders = 1;
+}
+
+message GetOrderInfoRequest {
+  uint32 order_id = 1;
+}
