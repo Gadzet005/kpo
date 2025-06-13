@@ -57,12 +57,12 @@ public class OrderContoller {
     @Operation(summary = "Get user orders", description = "Retrieves all orders for specified user")
     @ApiResponse(responseCode = "200", description = "Orders retrieved successfully", content = @Content(array = @ArraySchema(schema = @Schema(implementation = OrderSchema.class))))
     @ApiResponse(responseCode = "500", description = "Internal server error")
-    public ResponseEntity<List<Order>> getUserOrders(
+    public ResponseEntity<List<OrderSchema>> getUserOrders(
             @Parameter(description = "ID of the user", required = true, example = "123") @PathVariable int userId) {
         log.debug("getting user orders: user_id = {}", userId);
 
         try {
-            var orders = client.getUserOrders(userId);
+            var orders = client.getUserOrders(userId).stream().map(OrderSchema::new).toList();
             return ResponseEntity.ok().body(orders);
         } catch (Exception e) {
             log.error("failed to get user orders", e);
@@ -75,13 +75,14 @@ public class OrderContoller {
     @ApiResponse(responseCode = "200", description = "Order found", content = @Content(schema = @Schema(implementation = OrderSchema.class)))
     @ApiResponse(responseCode = "404", description = "Order not found")
     @ApiResponse(responseCode = "500", description = "Internal server error")
-    public ResponseEntity<Order> getOrder(
+    public ResponseEntity<OrderSchema> getOrder(
             @Parameter(description = "ID of the order", required = true, example = "456") @PathVariable int orderId) {
         log.debug("getting order: order_id = {}", orderId);
 
         try {
             var order = client.getOrder(orderId);
-            return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+            return order.map(OrderSchema::new).map(ResponseEntity::ok)
+                    .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (Exception e) {
             log.error("failed to get order", e);
             return ResponseEntity.internalServerError().build();
@@ -112,7 +113,12 @@ record OrderSchema(@Schema(description = "Unique identifier of the order", examp
 
         @Schema(description = "Current status of the order", example = "CREATED", implementation = OrderStatusSchema.class) OrderStatusSchema status,
 
-        @JsonProperty("created_at") @Schema(description = "Timestamp when order was created", example = "2023-05-15T10:30:00Z", type = "string", format = "date-time") Instant createdAt) {}
+        @JsonProperty("created_at") @Schema(description = "Timestamp when order was created", example = "2023-05-15T10:30:00Z", type = "string", format = "date-time") Instant createdAt) {
+    public OrderSchema(Order order) {
+        this(order.id(), order.userId(), order.amount(), order.description(),
+                OrderStatusSchema.valueOf(order.status().name()), order.createdAt());
+    }
+}
 
 @Schema(description = "Order status values")
 enum OrderStatusSchema {

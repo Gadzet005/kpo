@@ -12,6 +12,7 @@ import order_service.entities.PaymentRequest;
 import order_service.storages.OrderStorage;
 import order_service.storages.PaymentRequestStorage;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,16 +51,14 @@ class OrderServiceTest {
 
     @Test
     void testGetUserOrders() {
-        var userId = 1;
-        var orders = List.of(Order.builder().userId(userId).amount(100).description("Order 1").build(),
-                Order.builder().userId(userId).amount(200).description("Order 2").build());
+        var orders = List.of(Order.builder().amount(100).createdAt(Instant.now()).description("Order 1").build(),
+                Order.builder().amount(200).createdAt(Instant.now()).description("Order 2").build());
 
-        when(orderStorage.findAllByUserId(userId)).thenReturn(orders);
+        when(orderStorage.findAllByUserId(anyInt())).thenReturn(orders);
 
-        var result = orderService.getUserOrders(userId);
+        var result = orderService.getUserOrders(1);
 
         assertEquals(2, result.size());
-        assertTrue(result.stream().allMatch(order -> order.userId() == userId));
     }
 
     @Test

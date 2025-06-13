@@ -39,7 +39,7 @@ public class OrderService {
 
     public List<common_lib.models.Order> getUserOrders(int userId) {
         var orders = orderStorage.findAllByUserId(userId);
-        return orders.stream().map(Order::toModel).toList();
+        return orders.stream().map(Order::toModel).sorted((a, b) -> b.createdAt().compareTo(a.createdAt())).toList();
     }
 
     public Optional<common_lib.models.Order> getOrder(int orderId) {

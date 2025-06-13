@@ -80,10 +80,11 @@ class OrderContollerTest {
     @Test
     void testGetUserOrders() throws Exception {
         var orders = List.of(new Order(1, 1, 100, "Test order", OrderStatus.NEW, Instant.now()));
+        var ordersJson = mapper.writeValueAsString(orders.stream().map(OrderSchema::new).toList());
         doReturn(orders).when(orderServiceClient).getUserOrders(anyInt());
 
-        mockMvc.perform(get("/orders/user-orders/1")).andExpect(status().isOk()).andExpect(
-                result -> assertEquals(mapper.writeValueAsString(orders), result.getResponse().getContentAsString()));
+        mockMvc.perform(get("/orders/user-orders/1")).andExpect(status().isOk())
+                .andExpect(result -> assertEquals(ordersJson, result.getResponse().getContentAsString()));
     }
 
     @Test
@@ -95,11 +96,12 @@ class OrderContollerTest {
 
     @Test
     void testGetOrder() throws Exception {
-        Order order = new Order(1, 1, 100, "Test order", OrderStatus.NEW, Instant.now());
+        var order = new Order(1, 1, 100, "Test order", OrderStatus.NEW, Instant.now());
+        var orderJson = mapper.writeValueAsString(new OrderSchema(order));
         doReturn(Optional.of(order)).when(orderServiceClient).getOrder(anyInt());
 
-        mockMvc.perform(get("/orders/1")).andExpect(status().isOk()).andExpect(
-                result -> assertEquals(mapper.writeValueAsString(order), result.getResponse().getContentAsString()));
+        mockMvc.perform(get("/orders/1")).andExpect(status().isOk())
+                .andExpect(result -> assertEquals(orderJson, result.getResponse().getContentAsString()));
     }
 
     @Test

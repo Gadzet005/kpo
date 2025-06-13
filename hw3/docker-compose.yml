@@ -1,6 +1,6 @@
 services:
   payments-db:
-    profiles: ["all", "db", "payments", "external"]
+    profiles: ["all", "db", "payments", "external", "backend"]
     image: postgres:16-alpine
     container_name: payments-db
     environment:
@@ -20,7 +20,7 @@ services:
       retries: 5
 
   order-db:
-    profiles: ["all", "db", "order", "external"]
+    profiles: ["all", "db", "order", "external", "backend"]
     image: postgres:16-alpine
     container_name: order-db
     environment:
@@ -40,7 +40,7 @@ services:
       retries: 5
 
   api-gateway:
-    profiles: ["all", "api", "frontend"]
+    profiles: ["all", "backend"]
     build:
       dockerfile: api_gateway/Dockerfile
     container_name: api-gateway
@@ -59,7 +59,7 @@ services:
       - app-network
 
   payments-service:
-    profiles: ["all", "backend", "payments"]
+    profiles: ["all", "payments", "backend"]
     build:
       dockerfile: payments_service/Dockerfile
     container_name: payments-service
@@ -69,6 +69,7 @@ services:
     depends_on:
       - payments-db
       - kafka
+      - zookeeper
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://payments-db:5432/payments_db
       SPRING_DATASOURCE_USERNAME: postgres
@@ -78,7 +79,7 @@ services:
       - app-network
 
   order-service:
-    profiles: ["all", "backend", "order"]
+    profiles: ["all", "order", "backend"]
     build:
       dockerfile: order_service/Dockerfile
     container_name: order-service
@@ -88,6 +89,7 @@ services:
     depends_on:
       - order-db
       - kafka
+      - zookeeper
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://order-db:5432/order_db
       SPRING_DATASOURCE_USERNAME: postgres
@@ -97,7 +99,7 @@ services:
       - app-network
 
   zookeeper:
-    profiles: ["all", "kafka", "external"]
+    profiles: ["all", "kafka", "external", "backend"]
     image: bitnami/zookeeper:3.8
     container_name: zookeeper
     ports:
@@ -108,7 +110,7 @@ services:
       - app-network
 
   kafka:
-    profiles: ["all", "kafka", "external"]
+    profiles: ["all", "kafka", "external", "backend"]
     image: bitnami/kafka:3.3
     container_name: kafka
     ports:
@@ -127,7 +129,7 @@ services:
       - app-network
 
   kafka-ui:
-    profiles: ["all", "kafka", "external"]
+    profiles: ["all", "kafka", "external", "backend"]
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
     ports:
@@ -139,6 +141,21 @@ services:
       - kafka
     networks:
       - app-network
+
+  frontend:
+    profiles: ["all", "frontend"]
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - api-gateway
+    networks:
+      - app-network
+    environment:
+      VITE_API_URL: "http://localhost:8080"
 
 networks:
   app-network:
